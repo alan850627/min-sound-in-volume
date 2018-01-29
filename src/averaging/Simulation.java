@@ -30,12 +30,11 @@ public class Simulation {
 		aty = s.aty;
 		atz = s.atz;
 		s_length = s.s_length;
+		c = new Calculus(RES);
+		r = new Room();
 
-		this.c = new Calculus(RES);
-		this.r = new Room();
-
-		this.r.signals.add(new SignalSource(r.signals.get(0).x, r.signals.get(0).y, r.signals.get(0).z,
-				r.signals.get(0).amp, r.signals.get(0).freq, r.signals.get(0).phase));
+		r.signals.add(new SignalSource(s.r.signals.get(0).x, s.r.signals.get(0).y, s.r.signals.get(0).z,
+				s.r.signals.get(0).amp, s.r.signals.get(0).freq, s.r.signals.get(0).phase));
 
 		int mult = 1;
 		if (Math.random() > 0.8) {
@@ -45,10 +44,14 @@ public class Simulation {
 			}
 		}
 
-		for (int i = 1; i < r.signals.size(); i += 1) {
-			this.r.signals.add(new SignalSource(r.signals.get(i).x, r.signals.get(i).y, r.signals.get(i).z,
-					r.signals.get(i).amp + Math.random() * mult * 0.01 - 0.005, r.signals.get(i).freq,
-					r.signals.get(i).phase + Math.random() * mult * 0.01 - 0.005));
+		for (int i = 1; i < s.r.signals.size(); i += 1) {
+			r.signals.add(new SignalSource(
+					s.r.signals.get(i).x, 
+					s.r.signals.get(i).y, 
+					s.r.signals.get(i).z,
+					s.r.signals.get(i).amp + Math.random() * mult * 0.01 - 0.005, 
+					s.r.signals.get(i).freq,
+					s.r.signals.get(i).phase + Math.random() * mult * 0.01 - 0.005));
 		}
 
 		this.avg = c.avgValue(r, atx, aty, atz, s_length);
