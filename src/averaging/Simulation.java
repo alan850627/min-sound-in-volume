@@ -12,9 +12,15 @@ public class Simulation {
 	public Simulation(double x, double y, double z, double sl) {
 		c = new Calculus(RES);
 		r = new Room();
+		/* First signal is our noise source*/
 		r.signals.add(new SignalSource(20, 0, 0, 1, 440, 0));
 
 		r.signals.add(new SignalSource(0, 3, 0, Math.random() * 4 - 2, 440, Math.random() * 2 * Math.PI));
+		r.signals.add(new SignalSource(0, 2, 0, Math.random() * 4 - 2, 440, Math.random() * 2 * Math.PI));
+		r.signals.add(new SignalSource(0, 1, 0, Math.random() * 4 - 2, 440, Math.random() * 2 * Math.PI));
+		r.signals.add(new SignalSource(0, 0, 0, Math.random() * 4 - 2, 440, Math.random() * 2 * Math.PI));
+		r.signals.add(new SignalSource(0, -1, 0, Math.random() * 4 - 2, 440, Math.random() * 2 * Math.PI));
+		r.signals.add(new SignalSource(0, -2, 0, Math.random() * 4 - 2, 440, Math.random() * 2 * Math.PI));
 		r.signals.add(new SignalSource(0, -3, 0, Math.random() * 4 - 2, 440, Math.random() * 2 * Math.PI));
 
 		atx = x;
@@ -33,9 +39,11 @@ public class Simulation {
 		c = new Calculus(RES);
 		r = new Room();
 
+		/* keeping the first signal the same, since this is our noise source */
 		r.signals.add(new SignalSource(s.r.signals.get(0).x, s.r.signals.get(0).y, s.r.signals.get(0).z,
 				s.r.signals.get(0).amp, s.r.signals.get(0).freq, s.r.signals.get(0).phase));
 
+		/* Random mutating multipliers */
 		int mult = 1;
 		if (Math.random() > 0.8) {
 			mult = 10;
@@ -44,6 +52,7 @@ public class Simulation {
 			}
 		}
 
+		/* Mutating the over signals */
 		for (int i = 1; i < s.r.signals.size(); i += 1) {
 			r.signals.add(new SignalSource(
 					s.r.signals.get(i).x, 
